@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_effect_2d.gd" id="1_req2w"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_material.gd" id="2_hxov0"]
+[ext_resource type="Shader" path="res://addons/vfx_core/shaders/vc_hit_flash.gdshader" id="3_pncog"]
+
+[node name="HitFlash" type="Node2D" unique_id=608010994]
+script = ExtResource("1_req2w")
+effect_id = &"hit_flash"
+description = "Hit flash for sprites: the target sprite flashes pure white (added on top, so its detail stays) for a frame or two, then eases back in about 0.2 s; rapid hits keep the glow instead of strobing. Use VfxCore.apply(&\"hit_flash\", sprite); presets damage (red), heal (green) and light_bg (dark red-orange with an outline, for bright scenes)."
+category = &"combat"
+kit_tags = PackedStringArray("TD", "RTS", "S", "F", "D")
+size_class = 3
+duration = 0.2
+palette = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[node name="Flash" type="Node" parent="." unique_id=1543740242]
+script = ExtResource("2_hxov0")
+shader = ExtResource("3_pncog")
+param_keys = PackedVector2Array(0, 1, 0.15, 1, 0.3, 0.6, 1, 0)
+color_at = 0.0
+tail_param = &"tint_tail"
+rearm = 0.35
+additive = true

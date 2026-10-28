@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_chsxd"]
+
+[resource]
+script = ExtResource("1_chsxd")
+preset_id = &"dark"
+description = "Dark grey smoke that drifts and lingers (~2.5 s); reads on light backgrounds."
+palette = PackedColorArray(0.52, 0.51, 0.51, 1, 0.34, 0.34, 0.35, 1, 0.2, 0.2, 0.21, 1)
+scale = 1.1
+speed = 0.6
+layers_off = PackedStringArray()

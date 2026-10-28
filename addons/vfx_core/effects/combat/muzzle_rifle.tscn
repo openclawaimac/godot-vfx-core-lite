@@ -1,0 +1,122 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_effect_2d.gd" id="1_rtt2p"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_smoke.png" id="2_ff0qq"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_particles.gd" id="3_by23o"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_line.gd" id="4_vdng0"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_spark.png" id="5_rtqtm"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_muzzle.png" id="6_f7od2"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_sprite.gd" id="7_os5ce"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_star.png" id="8_1md77"]
+
+[sub_resource type="Curve" id="Curve_d1ovn"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0.6), 0.0, 0.0, 0, 0, Vector2(1, 2.4), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_esqkh"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.3), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="MuzzleRifle" type="Node2D" unique_id=1724250850]
+script = ExtResource("1_rtt2p")
+effect_id = &"muzzle_rifle"
+description = "Rifle muzzle flash along +X: flame tongue with side petals, barrel flash, forward sparks, a tracer and a smoke wisp. Rotate with `direction`; play_line() aims the tracer."
+category = &"combat"
+kit_tags = PackedStringArray("TD", "RTS", "S")
+duration = 0.85
+palette = PackedColorArray(1, 0.97, 0.82, 1, 1, 0.68, 0.22, 1, 0.85, 0.3, 0.06, 1)
+showcase_scale = 1.5
+
+[node name="Smoke" type="CPUParticles2D" parent="." unique_id=44949380]
+position = Vector2(10, 0)
+emitting = false
+texture = ExtResource("2_ff0qq")
+lifetime = 0.8
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.3
+spread = 22.0
+gravity = Vector2(0, -35)
+initial_velocity_min = 40.0
+initial_velocity_max = 110.0
+angular_velocity_min = -60.0
+angular_velocity_max = 60.0
+damping_min = 90.0
+damping_max = 130.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.26
+scale_amount_max = 0.42
+scale_amount_curve = SubResource("Curve_d1ovn")
+script = ExtResource("3_by23o")
+delay = 0.02
+base_amount = 6
+palette_to = 0.7
+alpha_keys = PackedVector2Array(0, 0, 0.15, 0.45, 1, 0)
+own_palette = PackedColorArray(0.62, 0.6, 0.58, 1, 0.36, 0.35, 0.35, 1, 0.17, 0.165, 0.17, 1)
+tint_strength = 0.0
+
+[node name="Tracer" type="Line2D" parent="." unique_id=2109128105]
+script = ExtResource("4_vdng0")
+life = 0.09
+length = 280.0
+head_from = 0.12
+streak = 0.42
+width_from = 2.6
+width_to = 1.2
+palette_to = 0.35
+brightness = 1.1
+alpha_keys = PackedVector2Array(0, 1, 0.7, 0.8, 1, 0)
+start_offset = 30.0
+
+[node name="Sparks" type="CPUParticles2D" parent="." unique_id=1817410483]
+position = Vector2(12, 0)
+emitting = false
+texture = ExtResource("5_rtqtm")
+lifetime = 0.16
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.4
+particle_flag_align_y = true
+spread = 14.0
+initial_velocity_min = 380.0
+initial_velocity_max = 720.0
+scale_amount_min = 0.4
+scale_amount_max = 0.65
+scale_amount_curve = SubResource("Curve_esqkh")
+script = ExtResource("3_by23o")
+base_amount = 6
+blend = 1
+palette_to = 0.6
+alpha_keys = PackedVector2Array(0, 1, 1, 0)
+own_palette = PackedColorArray()
+brightness = 1.2
+
+[node name="Flame" type="Sprite2D" parent="." unique_id=291369143]
+texture = ExtResource("6_f7od2")
+offset = Vector2(32, 0)
+script = ExtResource("7_os5ce")
+life = 0.1
+scale_from = Vector2(1, 0.75)
+scale_to = Vector2(1.7, 1.3)
+alpha_keys = PackedVector2Array(0, 1, 0.5, 0.8, 1, 0)
+palette_to = 0.6
+own_palette = PackedColorArray()
+brightness = 1.3
+angle_jitter = 4.0
+scale_jitter = 0.2
+
+[node name="Flash" type="Sprite2D" parent="." unique_id=1901879826]
+position = Vector2(6, 0)
+texture = ExtResource("8_1md77")
+script = ExtResource("7_os5ce")
+life = 0.085
+scale_from = Vector2(0.5, 0.5)
+scale_to = Vector2(0.95, 0.95)
+alpha_keys = PackedVector2Array(0, 1, 1, 0)
+palette_to = 0.3
+own_palette = PackedColorArray()
+brightness = 1.2
+angle_jitter = 180.0

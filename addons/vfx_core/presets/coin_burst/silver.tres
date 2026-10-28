@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_8ri6f"]
+
+[resource]
+script = ExtResource("1_8ri6f")
+preset_id = &"silver"
+description = "Silver coins."
+palette = PackedColorArray(1, 1, 1, 1, 0.78, 0.8, 0.86, 1, 0.4, 0.42, 0.5, 1)
+layers_off = PackedStringArray()

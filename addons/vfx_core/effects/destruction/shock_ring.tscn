@@ -1,0 +1,41 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_effect_2d.gd" id="1_icaek"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_glow.png" id="2_mxtgf"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_sprite.gd" id="3_l24we"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_ring.gd" id="4_bt2gg"]
+
+[node name="ShockRing" type="Node2D" unique_id=1942893861]
+script = ExtResource("1_icaek")
+effect_id = &"shock_ring"
+description = "Expanding shock ring on one quad: sharp leading edge, noise breakup and a soft inner haze."
+category = &"destruction"
+kit_tags = PackedStringArray("D", "TD", "RTS")
+duration = 0.5
+palette = PackedColorArray(1, 1, 1, 1, 0.72, 0.86, 1, 1, 0.35, 0.5, 0.95, 1)
+showcase_scale = 1.5
+
+[node name="Flash" type="Sprite2D" parent="." unique_id=1283903807]
+texture = ExtResource("2_mxtgf")
+script = ExtResource("3_l24we")
+life = 0.12
+scale_from = Vector2(0.6, 0.6)
+scale_to = Vector2(2, 2)
+alpha_keys = PackedVector2Array(0, 0.9, 1, 0)
+palette_to = 0.4
+own_palette = PackedColorArray()
+brightness = 0.9
+
+[node name="Ring" type="Node2D" parent="." unique_id=2142322638]
+script = ExtResource("4_bt2gg")
+life = 0.5
+radius_from = 6.0
+radius_to = 120.0
+radius_ease = 0.3
+thickness_from = 0.18
+thickness_to = 0.03
+alpha_keys = PackedVector2Array(0, 1, 0.7, 0.75, 1, 0)
+palette_to = 0.7
+own_palette = PackedColorArray()
+fill = 0.14
+breakup = 0.3

@@ -1,0 +1,145 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_effect_2d.gd" id="1_led33"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_dust_wide.png" id="2_vdix6"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_particles.gd" id="3_2csbh"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_dust.png" id="4_hnmr8"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_bodies.gd" id="5_n5bvs"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_glow.png" id="6_wrnnp"]
+
+[sub_resource type="Curve" id="Curve_doapn"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.35, 1.2), 0.0, 0.0, 0, 0, Vector2(1, 1.75), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_kv3u1"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.35, 1.2), 0.0, 0.0, 0, 0, Vector2(1, 1.75), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_lyatt"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.4, 1.15), 0.0, 0.0, 0, 0, Vector2(1, 1.6), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="DustPuff" type="Node2D" unique_id=1146081217]
+script = ExtResource("1_led33")
+effect_id = &"dust_puff"
+description = "Landing or footfall dust: a wide, low cloud that rolls out along the ground to both sides, a soft rising centre and grit that skips on the floor. Play it on the ground line."
+category = &"destruction"
+kit_tags = PackedStringArray("D", "S")
+duration = 1.4
+palette = PackedColorArray(0.92, 0.85, 0.72, 1, 0.74, 0.64, 0.5, 1, 0.5, 0.43, 0.35, 1)
+showcase_scale = 1.5
+
+[node name="SkirtL" type="CPUParticles2D" parent="." unique_id=1290867302]
+position = Vector2(0, -12)
+emitting = false
+texture = ExtResource("2_vdix6")
+lifetime = 1.3
+one_shot = true
+explosiveness = 0.95
+lifetime_randomness = 0.3
+emission_shape = 3
+emission_rect_extents = Vector2(10, 2)
+direction = Vector2(-1, -0.04)
+spread = 6.0
+gravity = Vector2(0, -14)
+initial_velocity_min = 120.0
+initial_velocity_max = 330.0
+damping_min = 260.0
+damping_max = 360.0
+angle_min = -5.0
+angle_max = 5.0
+scale_amount_min = 1.2
+scale_amount_max = 1.7
+scale_amount_curve = SubResource("Curve_doapn")
+script = ExtResource("3_2csbh")
+palette_from = 0.05
+palette_to = 0.85
+alpha_keys = PackedVector2Array(0, 0, 0.07, 0.92, 0.5, 0.72, 1, 0)
+own_palette = PackedColorArray()
+
+[node name="SkirtR" type="CPUParticles2D" parent="." unique_id=1152818458]
+position = Vector2(0, -12)
+emitting = false
+texture = ExtResource("2_vdix6")
+lifetime = 1.3
+one_shot = true
+explosiveness = 0.95
+lifetime_randomness = 0.3
+emission_shape = 3
+emission_rect_extents = Vector2(10, 2)
+direction = Vector2(1, -0.04)
+spread = 6.0
+gravity = Vector2(0, -14)
+initial_velocity_min = 120.0
+initial_velocity_max = 330.0
+damping_min = 260.0
+damping_max = 360.0
+angle_min = -5.0
+angle_max = 5.0
+scale_amount_min = 1.2
+scale_amount_max = 1.7
+scale_amount_curve = SubResource("Curve_kv3u1")
+script = ExtResource("3_2csbh")
+palette_from = 0.05
+palette_to = 0.85
+alpha_keys = PackedVector2Array(0, 0, 0.07, 0.92, 0.5, 0.72, 1, 0)
+own_palette = PackedColorArray()
+
+[node name="Centre" type="CPUParticles2D" parent="." unique_id=1283890607]
+position = Vector2(0, -22)
+emitting = false
+texture = ExtResource("4_hnmr8")
+lifetime = 1.4
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.25
+emission_shape = 3
+emission_rect_extents = Vector2(14, 3)
+direction = Vector2(0, -1)
+spread = 40.0
+gravity = Vector2(0, -10)
+initial_velocity_min = 25.0
+initial_velocity_max = 70.0
+angular_velocity_min = -25.0
+angular_velocity_max = 25.0
+damping_min = 35.0
+damping_max = 50.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 1.4
+scale_amount_max = 1.9
+scale_amount_curve = SubResource("Curve_lyatt")
+script = ExtResource("3_2csbh")
+base_amount = 6
+palette_to = 0.7
+alpha_keys = PackedVector2Array(0, 0, 0.12, 0.85, 0.6, 0.5, 1, 0)
+own_palette = PackedColorArray()
+
+[node name="Grit" type="Node2D" parent="." unique_id=2046349533]
+script = ExtResource("5_n5bvs")
+base_amount = 8
+texture = ExtResource("6_wrnnp")
+size_min = 3.0
+size_max = 5.0
+speed_min = 110.0
+speed_max = 260.0
+spread = 75.0
+emit_radius = 8.0
+gravity = 900.0
+bounce = 0.3
+friction = 0.5
+drag = 0.5
+spin_min = 0.0
+spin_max = 0.0
+life_min = 0.5
+life_max = 0.85
+fade = 0.3
+floor_offset = 0.0
+palette_from = 0.55
+palette_to = 1.0
+shade = 0
+own_palette = PackedColorArray()
+end_scale = 0.5

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_b6ug2"]
+
+[resource]
+script = ExtResource("1_b6ug2")
+preset_id = &"damage"
+description = "Red damage flash."
+palette = PackedColorArray(1, 0.22, 0.18, 1, 0.9, 0.12, 0.1, 1, 0.6, 0.05, 0.05, 1)
+layers_off = PackedStringArray()

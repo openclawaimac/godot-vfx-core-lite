@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_sdttb"]
+
+[resource]
+script = ExtResource("1_sdttb")
+preset_id = &"light_bg"
+description = "For bright scenes: deep blue ring with a dark rim."
+palette = PackedColorArray(0.55, 0.75, 1, 1, 0.2, 0.42, 0.9, 1, 0.08, 0.16, 0.5, 1)
+light_background = true
+layers_off = PackedStringArray()

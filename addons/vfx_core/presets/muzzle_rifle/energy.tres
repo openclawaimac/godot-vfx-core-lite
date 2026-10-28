@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_dntpy"]
+
+[resource]
+script = ExtResource("1_dntpy")
+preset_id = &"energy"
+description = "Cyan energy rifle."
+palette = PackedColorArray(0.9, 1, 1, 1, 0.3, 0.85, 1, 1, 0.1, 0.35, 0.9, 1)
+layers_off = PackedStringArray()

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_rk22d"]
+
+[resource]
+script = ExtResource("1_rk22d")
+preset_id = &"energy"
+description = "Electric blue sparks."
+palette = PackedColorArray(0.92, 0.98, 1, 1, 0.4, 0.75, 1, 1, 0.2, 0.3, 0.95, 1)
+layers_off = PackedStringArray()

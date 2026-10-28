@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_s641w"]
+
+[resource]
+script = ExtResource("1_s641w")
+preset_id = &"pixel"
+description = "Pixel-art style, 3 px blocks."
+palette = PackedColorArray()
+style = 1
+layers_off = PackedStringArray()

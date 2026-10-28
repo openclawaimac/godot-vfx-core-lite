@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_w718x"]
+
+[resource]
+script = ExtResource("1_w718x")
+preset_id = &"plasma"
+description = "Blue-violet energy blast."
+palette = PackedColorArray(0.92, 0.95, 1, 1, 0.45, 0.5, 1, 1, 0.3, 0.08, 0.5, 1)
+layers_off = PackedStringArray()

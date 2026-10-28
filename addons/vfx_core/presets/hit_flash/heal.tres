@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_l8by6"]
+
+[resource]
+script = ExtResource("1_l8by6")
+preset_id = &"heal"
+description = "Green heal flash."
+palette = PackedColorArray(0.45, 1, 0.5, 1, 0.25, 0.85, 0.35, 1, 0.1, 0.55, 0.2, 1)
+layers_off = PackedStringArray()

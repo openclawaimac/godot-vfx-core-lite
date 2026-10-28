@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_kivlh"]
+
+[resource]
+script = ExtResource("1_kivlh")
+preset_id = &"snow"
+description = "Powder snow."
+palette = PackedColorArray(1, 1, 1, 1, 0.86, 0.92, 1, 1, 0.62, 0.72, 0.86, 1)
+layers_off = PackedStringArray()

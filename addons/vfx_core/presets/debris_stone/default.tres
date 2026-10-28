@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_xlncu"]
+
+[resource]
+script = ExtResource("1_xlncu")
+description = "Grey stone."
+palette = PackedColorArray()
+layers_off = PackedStringArray()

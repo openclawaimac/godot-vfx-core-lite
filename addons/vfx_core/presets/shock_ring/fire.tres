@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_vl1s0"]
+
+[resource]
+script = ExtResource("1_vl1s0")
+preset_id = &"fire"
+description = "Orange heat ring."
+palette = PackedColorArray(1, 0.95, 0.75, 1, 1, 0.55, 0.15, 1, 0.8, 0.2, 0.05, 1)
+layers_off = PackedStringArray()

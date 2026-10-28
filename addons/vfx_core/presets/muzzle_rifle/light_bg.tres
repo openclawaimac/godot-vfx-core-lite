@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_3kjm3"]
+
+[resource]
+script = ExtResource("1_3kjm3")
+preset_id = &"light_bg"
+description = "For bright scenes: deep orange flash with dark fringes."
+palette = PackedColorArray(1, 0.82, 0.35, 1, 0.98, 0.48, 0.06, 1, 0.62, 0.18, 0.02, 1)
+light_background = true
+layers_off = PackedStringArray()

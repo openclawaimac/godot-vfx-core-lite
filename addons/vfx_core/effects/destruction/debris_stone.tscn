@@ -1,0 +1,105 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_effect_2d.gd" id="1_4eamn"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_dust.png" id="2_6yvro"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_particles.gd" id="3_pl2i8"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_bodies.gd" id="4_wk214"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_debris_stone.png" id="5_pbyvc"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_glow.png" id="6_sptuv"]
+
+[sub_resource type="Curve" id="Curve_8i3ia"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0.6), 0.0, 0.0, 0, 0, Vector2(1, 1.6), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="DebrisStone" type="Node2D" unique_id=1200665601]
+script = ExtResource("1_4eamn")
+effect_id = &"debris_stone"
+description = "Stone chunks thrown up, spinning, bouncing on floor_y and settling, with grit and a dust cloud."
+category = &"destruction"
+kit_tags = PackedStringArray("D", "RTS", "S")
+size_class = 1
+duration = 1.85
+palette = PackedColorArray(0.86, 0.82, 0.76, 1, 0.56, 0.53, 0.5, 1, 0.32, 0.3, 0.29, 1)
+showcase_scale = 1.15
+
+[node name="Dust" type="CPUParticles2D" parent="." unique_id=249037107]
+emitting = false
+texture = ExtResource("2_6yvro")
+lifetime = 1.1
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.3
+emission_shape = 1
+emission_sphere_radius = 16.0
+direction = Vector2(0, -1)
+spread = 100.0
+gravity = Vector2(0, -15)
+initial_velocity_min = 30.0
+initial_velocity_max = 90.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+damping_min = 60.0
+damping_max = 90.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.8
+scale_amount_max = 1.25
+scale_amount_curve = SubResource("Curve_8i3ia")
+script = ExtResource("3_pl2i8")
+base_amount = 10
+palette_from = 0.2
+palette_to = 0.9
+alpha_keys = PackedVector2Array(0, 0, 0.1, 0.7, 0.55, 0.4, 1, 0)
+own_palette = PackedColorArray(0.93, 0.87, 0.77, 1, 0.7, 0.63, 0.54, 1, 0.46, 0.41, 0.36, 1)
+tint_strength = 0.25
+
+[node name="Chunks" type="Node2D" parent="." unique_id=562397412]
+script = ExtResource("4_wk214")
+base_amount = 18
+texture = ExtResource("5_pbyvc")
+hframes = 2
+vframes = 2
+size_min = 9.0
+size_max = 21.0
+speed_min = 230.0
+speed_max = 540.0
+emit_radius = 8.0
+gravity = 1150.0
+bounce = 0.33
+drag = 0.3
+spin_min = -620.0
+spin_max = 620.0
+life_min = 1.25
+life_max = 1.85
+fade = 0.4
+floor_offset = 44.0
+palette_from = 0.05
+palette_to = 0.85
+own_palette = PackedColorArray()
+end_scale = 0.75
+
+[node name="Grit" type="CPUParticles2D" parent="." unique_id=1074372669]
+emitting = false
+texture = ExtResource("6_sptuv")
+lifetime = 0.75
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.4
+emission_shape = 1
+emission_sphere_radius = 6.0
+direction = Vector2(0, -1)
+spread = 75.0
+gravity = Vector2(0, 950)
+initial_velocity_min = 120.0
+initial_velocity_max = 340.0
+damping_min = 10.0
+damping_max = 30.0
+scale_amount_min = 0.06
+scale_amount_max = 0.13
+script = ExtResource("3_pl2i8")
+base_amount = 20
+palette_from = 0.35
+alpha_keys = PackedVector2Array(0, 1, 0.75, 0.9, 1, 0)
+own_palette = PackedColorArray()
+brightness = 0.9

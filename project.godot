@@ -1,0 +1,36 @@
+; Engine configuration file.
+; VFX Core 2D Lite for Godot 4 (MIT). Compatibility renderer by default so the
+; demo and the web build behave the same.
+
+config_version=5
+
+[application]
+
+config/name="VFX Core 2D Lite for Godot 4"
+config/description="Procedural 2D VFX for Godot 4: one call to play, pooled, any colour, any scale."
+run/main_scene="res://demo/demo.tscn"
+config/features=PackedStringArray("4.4")
+boot_splash/bg_color=Color(0.07, 0.08, 0.1, 1)
+boot_splash/show_image=false
+
+[autoload]
+
+VfxCore="*res://addons/vfx_core/runtime/vfx_core.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/vfx_core/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.07, 0.08, 0.1, 1)
+2d/snap/snap_2d_transforms_to_pixel=false

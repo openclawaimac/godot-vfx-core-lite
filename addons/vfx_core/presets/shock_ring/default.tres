@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_n01a6"]
+
+[resource]
+script = ExtResource("1_n01a6")
+description = "White-blue air ring."
+palette = PackedColorArray()
+layers_off = PackedStringArray()

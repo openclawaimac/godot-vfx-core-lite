@@ -1,0 +1,122 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_effect_2d.gd" id="1_wqj6y"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_ring.gd" id="2_xbfb1"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_core.png" id="3_pda5b"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_sprite.gd" id="4_mml2x"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_star.png" id="5_bqbjf"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_bodies.gd" id="6_3unxj"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_coin.png" id="7_i5ky3"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_sparkle.png" id="8_bxlpt"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_particles.gd" id="9_jxyp0"]
+
+[sub_resource type="Curve" id="Curve_wnj11"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="CoinBurst" type="Node2D" unique_id=1162916132]
+script = ExtResource("1_wqj6y")
+effect_id = &"coin_burst"
+description = "Reward burst: big coins pop out with a snap, spin with a glint as each face turns to you, bounce and settle, with a gold pop, ring and sparkles."
+category = &"pickups"
+kit_tags = PackedStringArray("TD", "S", "F", "D", "RTS")
+size_class = 1
+duration = 1.35
+palette = PackedColorArray(1, 0.95, 0.66, 1, 1, 0.76, 0.2, 1, 0.62, 0.36, 0.05, 1)
+showcase_scale = 1.15
+
+[node name="Ring" type="Node2D" parent="." unique_id=884879164]
+script = ExtResource("2_xbfb1")
+life = 0.26
+radius_from = 6.0
+radius_to = 80.0
+radius_ease = 0.25
+thickness_from = 0.28
+thickness_to = 0.05
+alpha_keys = PackedVector2Array(0, 1, 1, 0)
+palette_from = 0.05
+own_palette = PackedColorArray()
+brightness = 0.9
+fill = 0.08
+breakup = 0.3
+
+[node name="Pop" type="Sprite2D" parent="." unique_id=1403889868]
+texture = ExtResource("3_pda5b")
+script = ExtResource("4_mml2x")
+life = 0.14
+scale_from = Vector2(0.4, 0.4)
+scale_to = Vector2(1.9, 1.9)
+scale_ease = 0.25
+alpha_keys = PackedVector2Array(0, 1, 0.4, 0.8, 1, 0)
+palette_to = 0.3
+blend = 0
+own_palette = PackedColorArray()
+
+[node name="Flash" type="Sprite2D" parent="." unique_id=498909118]
+texture = ExtResource("5_bqbjf")
+script = ExtResource("4_mml2x")
+life = 0.16
+scale_from = Vector2(0.4, 0.4)
+scale_to = Vector2(1.9, 1.9)
+scale_ease = 0.3
+alpha_keys = PackedVector2Array(0, 1, 1, 0)
+palette_to = 0.3
+own_palette = PackedColorArray()
+brightness = 1.2
+angle_jitter = 30.0
+
+[node name="Coins" type="Node2D" parent="." unique_id=925713695]
+script = ExtResource("6_3unxj")
+base_amount = 12
+texture = ExtResource("7_i5ky3")
+size_min = 36.0
+size_max = 44.0
+speed_min = 320.0
+speed_max = 500.0
+spread = 36.0
+emit_radius = 5.0
+gravity = 1450.0
+bounce = 0.42
+friction = 0.62
+drag = 0.25
+spin_min = 0.0
+spin_max = 0.0
+flip = true
+flip_speed = 11.0
+life_min = 1.0
+life_max = 1.35
+fade = 0.25
+floor_offset = 40.0
+palette_to = 0.55
+own_palette = PackedColorArray()
+end_scale = 0.7
+pop_time = 0.12
+pop_from = 0.3
+glint = 1.0
+glint_texture = ExtResource("8_bxlpt")
+glint_size = 1.8
+
+[node name="Sparkles" type="CPUParticles2D" parent="." unique_id=683922424]
+emitting = false
+texture = ExtResource("8_bxlpt")
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.75
+lifetime_randomness = 0.45
+emission_shape = 1
+emission_sphere_radius = 44.0
+direction = Vector2(0, -1)
+spread = 60.0
+gravity = Vector2(0, -20)
+initial_velocity_min = 20.0
+initial_velocity_max = 70.0
+scale_amount_min = 0.8
+scale_amount_max = 1.5
+scale_amount_curve = SubResource("Curve_wnj11")
+script = ExtResource("9_jxyp0")
+delay = 0.04
+base_amount = 12
+palette_to = 0.35
+alpha_keys = PackedVector2Array(0, 1, 1, 0.7)
+own_palette = PackedColorArray()

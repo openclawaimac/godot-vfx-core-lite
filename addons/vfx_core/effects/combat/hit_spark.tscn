@@ -1,0 +1,100 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_effect_2d.gd" id="1_r48fg"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_ring.gd" id="2_472yn"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_glow.png" id="3_brv4x"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_particles.gd" id="4_r3w8r"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_spark.png" id="5_nskkx"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_core.png" id="6_a1kqu"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_sprite.gd" id="7_xr0oj"]
+
+[sub_resource type="Curve" id="Curve_6rwch"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="HitSpark" type="Node2D" unique_id=95424080]
+script = ExtResource("1_r48fg")
+effect_id = &"hit_spark"
+description = "Metal-on-metal impact: hot pinpoint flash, a fan of streaking sparks along the hit normal, a tiny ring and falling embers. Pass `normal` to aim it."
+category = &"combat"
+kit_tags = PackedStringArray("TD", "RTS", "S", "F")
+duration = 0.6
+palette = PackedColorArray(1, 1, 0.92, 1, 1, 0.78, 0.3, 1, 0.92, 0.36, 0.08, 1)
+showcase_scale = 1.5
+
+[node name="Ring" type="Node2D" parent="." unique_id=1105259644]
+script = ExtResource("2_472yn")
+life = 0.15
+radius_from = 3.0
+radius_to = 36.0
+radius_ease = 0.3
+thickness_from = 0.3
+thickness_to = 0.08
+alpha_keys = PackedVector2Array(0, 0.9, 1, 0)
+palette_from = 0.2
+palette_to = 0.7
+own_palette = PackedColorArray()
+brightness = 0.7
+fill = 0.0
+breakup = 0.3
+
+[node name="Embers" type="CPUParticles2D" parent="." unique_id=1876518902]
+emitting = false
+texture = ExtResource("3_brv4x")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.4
+spread = 70.0
+gravity = Vector2(0, 520)
+initial_velocity_min = 60.0
+initial_velocity_max = 170.0
+damping_min = 20.0
+damping_max = 40.0
+scale_amount_min = 0.07
+scale_amount_max = 0.12
+script = ExtResource("4_r3w8r")
+base_amount = 6
+blend = 1
+palette_from = 0.15
+palette_to = 0.9
+alpha_keys = PackedVector2Array(0, 1, 0.7, 0.8, 1, 0)
+own_palette = PackedColorArray()
+brightness = 1.2
+
+[node name="Sparks" type="CPUParticles2D" parent="." unique_id=965237957]
+emitting = false
+texture = ExtResource("5_nskkx")
+lifetime = 0.32
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.5
+particle_flag_align_y = true
+spread = 55.0
+gravity = Vector2(0, 420)
+initial_velocity_min = 220.0
+initial_velocity_max = 560.0
+damping_min = 300.0
+damping_max = 520.0
+scale_amount_min = 0.5
+scale_amount_max = 0.85
+scale_amount_curve = SubResource("Curve_6rwch")
+script = ExtResource("4_r3w8r")
+base_amount = 14
+blend = 1
+palette_to = 0.7
+alpha_keys = PackedVector2Array(0, 1, 0.6, 0.9, 1, 0)
+own_palette = PackedColorArray()
+brightness = 1.25
+
+[node name="Flash" type="Sprite2D" parent="." unique_id=1956776786]
+texture = ExtResource("6_a1kqu")
+script = ExtResource("7_xr0oj")
+life = 0.12
+scale_to = Vector2(1.15, 1.15)
+scale_ease = 0.3
+alpha_keys = PackedVector2Array(0, 1, 1, 0)
+palette_to = 0.3
+own_palette = PackedColorArray()
+brightness = 1.3

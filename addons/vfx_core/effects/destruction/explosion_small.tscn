@@ -1,0 +1,142 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_effect_2d.gd" id="1_vrkxr"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_smoke_dense.png" id="2_nptgd"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_particles.gd" id="3_17a4b"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_fireball.png" id="4_g22vn"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_spark.png" id="5_fasiu"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_glow.png" id="6_1ek3d"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_sprite.gd" id="7_8cv4d"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_star.png" id="8_fnqys"]
+
+[sub_resource type="Curve" id="Curve_q3w7g"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0.55), 0.0, 0.0, 0, 0, Vector2(0.2, 1.15), 0.0, 0.0, 0, 0, Vector2(1, 1.9), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_ctwgj"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0.55), 0.0, 0.0, 0, 0, Vector2(0.22, 1.15), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_qet6x"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.3), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="ExplosionSmall" type="Node2D" unique_id=490542490]
+script = ExtResource("1_vrkxr")
+effect_id = &"explosion_small"
+description = "Small blast: white-hot flash, a billowing fireball that cools from yellow through orange to red, flying sparks and dark smoke that rolls up and lingers for about three seconds."
+category = &"destruction"
+kit_tags = PackedStringArray("D", "RTS", "TD")
+duration = 3.55
+palette = PackedColorArray(1, 0.96, 0.8, 1, 1, 0.55, 0.12, 1, 0.5, 0.12, 0.04, 1)
+showcase_scale = 1.5
+
+[node name="Smoke" type="CPUParticles2D" parent="." unique_id=2040658757]
+emitting = false
+texture = ExtResource("2_nptgd")
+lifetime = 3.0
+one_shot = true
+explosiveness = 0.85
+lifetime_randomness = 0.2
+emission_shape = 1
+emission_sphere_radius = 26.0
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, -42)
+initial_velocity_min = 30.0
+initial_velocity_max = 95.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+damping_min = 40.0
+damping_max = 60.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 1.8
+scale_amount_max = 2.5
+scale_amount_curve = SubResource("Curve_q3w7g")
+script = ExtResource("3_17a4b")
+delay = 0.1
+base_amount = 10
+alpha_keys = PackedVector2Array(0, 0, 0.07, 0.92, 0.45, 0.8, 0.8, 0.45, 1, 0)
+own_palette = PackedColorArray(0.62, 0.44, 0.3, 1, 0.36, 0.33, 0.32, 1, 0.26, 0.25, 0.26, 1)
+tint_strength = 0.1
+
+[node name="Fireball" type="CPUParticles2D" parent="." unique_id=603265888]
+emitting = false
+texture = ExtResource("4_g22vn")
+lifetime = 0.8
+one_shot = true
+explosiveness = 0.95
+lifetime_randomness = 0.3
+emission_shape = 1
+emission_sphere_radius = 20.0
+spread = 180.0
+gravity = Vector2(0, -45)
+initial_velocity_min = 80.0
+initial_velocity_max = 240.0
+angular_velocity_min = -70.0
+angular_velocity_max = 70.0
+damping_min = 190.0
+damping_max = 270.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 1.9
+scale_amount_max = 2.6
+scale_amount_curve = SubResource("Curve_ctwgj")
+script = ExtResource("3_17a4b")
+base_amount = 12
+shade = 2
+alpha_keys = PackedVector2Array(0, 1, 0.15, 1, 0.4, 0.97, 0.72, 0.75, 1, 0)
+own_palette = PackedColorArray()
+
+[node name="Sparks" type="CPUParticles2D" parent="." unique_id=60091941]
+emitting = false
+texture = ExtResource("5_fasiu")
+lifetime = 0.55
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.35
+particle_flag_align_y = true
+spread = 180.0
+gravity = Vector2(0, 380)
+initial_velocity_min = 340.0
+initial_velocity_max = 640.0
+damping_min = 140.0
+damping_max = 240.0
+scale_amount_min = 0.8
+scale_amount_max = 1.25
+scale_amount_curve = SubResource("Curve_qet6x")
+script = ExtResource("3_17a4b")
+palette_from = 0.05
+palette_to = 0.6
+alpha_keys = PackedVector2Array(0, 1, 0.7, 0.9, 1, 0)
+own_palette = PackedColorArray()
+
+[node name="Glow" type="Sprite2D" parent="." unique_id=637695589]
+texture = ExtResource("6_1ek3d")
+script = ExtResource("7_8cv4d")
+life = 0.32
+scale_from = Vector2(1.2, 1.2)
+scale_to = Vector2(4.6, 4.6)
+scale_ease = 0.3
+alpha_keys = PackedVector2Array(0, 1, 0.35, 0.6, 1, 0)
+own_palette = PackedColorArray()
+brightness = 0.95
+
+[node name="Flash" type="Sprite2D" parent="." unique_id=1694519059]
+texture = ExtResource("8_fnqys")
+script = ExtResource("7_8cv4d")
+life = 0.12
+scale_from = Vector2(2.2, 2.2)
+scale_to = Vector2(3.4, 3.4)
+scale_ease = 0.3
+alpha_keys = PackedVector2Array(0, 1, 0.4, 0.95, 1, 0)
+palette_to = 0.1
+blend = 0
+own_palette = PackedColorArray(1, 1, 1, 1, 1, 0.98, 0.9, 1, 1, 0.92, 0.7, 1)
+tint_strength = 0.25
+angle_jitter = 180.0
+scale_jitter = 0.12

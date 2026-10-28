@@ -1,0 +1,118 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_effect_2d.gd" id="1_4ry7i"]
+[ext_resource type="Texture2D" path="res://addons/vfx_core/textures/vc_smoke_dense.png" id="2_bjdbm"]
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_layer_particles.gd" id="3_dfxl2"]
+
+[sub_resource type="Curve" id="Curve_q2rhs"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0.6), 0.0, 0.0, 0, 0, Vector2(1, 1.8), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_rg47j"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.35, 1.15), 0.0, 0.0, 0, 0, Vector2(1, 1.65), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_odyf6"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 1.6), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="SmokePuff" type="Node2D" unique_id=2144243149]
+script = ExtResource("1_4ry7i")
+effect_id = &"smoke_puff"
+description = "Dense smoke puff with lit tops and shaded undersides: billows out, rises slowly, curls and thins away. Use the Dark preset on light backgrounds."
+category = &"destruction"
+kit_tags = PackedStringArray("D", "TD", "F", "S")
+duration = 1.65
+palette = PackedColorArray(0.88, 0.87, 0.88, 1, 0.56, 0.56, 0.58, 1, 0.3, 0.3, 0.32, 1)
+showcase_scale = 1.5
+
+[node name="Wisps" type="CPUParticles2D" parent="." unique_id=1054544392]
+emitting = false
+texture = ExtResource("2_bjdbm")
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.3
+emission_shape = 1
+emission_sphere_radius = 12.0
+spread = 180.0
+gravity = Vector2(0, -28)
+initial_velocity_min = 70.0
+initial_velocity_max = 120.0
+angular_velocity_min = -50.0
+angular_velocity_max = 50.0
+damping_min = 80.0
+damping_max = 110.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.9
+scale_amount_max = 1.3
+scale_amount_curve = SubResource("Curve_q2rhs")
+script = ExtResource("3_dfxl2")
+base_amount = 6
+palette_from = 0.1
+palette_to = 0.9
+alpha_keys = PackedVector2Array(0, 0, 0.12, 0.8, 1, 0)
+own_palette = PackedColorArray()
+
+[node name="Core" type="CPUParticles2D" parent="." unique_id=566483666]
+emitting = false
+texture = ExtResource("2_bjdbm")
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.92
+lifetime_randomness = 0.3
+emission_shape = 1
+emission_sphere_radius = 24.0
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, -38)
+initial_velocity_min = 25.0
+initial_velocity_max = 80.0
+angular_velocity_min = -28.0
+angular_velocity_max = 28.0
+damping_min = 14.0
+damping_max = 22.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 1.6
+scale_amount_max = 2.2
+scale_amount_curve = SubResource("Curve_rg47j")
+script = ExtResource("3_dfxl2")
+base_amount = 12
+palette_to = 0.95
+alpha_keys = PackedVector2Array(0, 0, 0.1, 0.97, 0.6, 0.72, 1, 0)
+own_palette = PackedColorArray()
+
+[node name="Top" type="CPUParticles2D" parent="." unique_id=1581685000]
+position = Vector2(0, -22)
+emitting = false
+texture = ExtResource("2_bjdbm")
+lifetime = 1.3
+one_shot = true
+explosiveness = 0.9
+lifetime_randomness = 0.3
+emission_shape = 1
+emission_sphere_radius = 10.0
+direction = Vector2(0, -1)
+spread = 25.0
+gravity = Vector2(0, -20)
+initial_velocity_min = 40.0
+initial_velocity_max = 70.0
+angular_velocity_min = -20.0
+angular_velocity_max = 20.0
+damping_min = 20.0
+damping_max = 30.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 1.2
+scale_amount_max = 1.6
+scale_amount_curve = SubResource("Curve_odyf6")
+script = ExtResource("3_dfxl2")
+delay = 0.08
+base_amount = 4
+palette_to = 0.8
+alpha_keys = PackedVector2Array(0, 0, 0.15, 0.85, 1, 0)
+own_palette = PackedColorArray()

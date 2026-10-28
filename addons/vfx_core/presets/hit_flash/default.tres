@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="VCPreset" format=3]
+
+[ext_resource type="Script" path="res://addons/vfx_core/runtime/vc_preset.gd" id="1_7o6tk"]
+
+[resource]
+script = ExtResource("1_7o6tk")
+description = "White flash."
+palette = PackedColorArray()
+layers_off = PackedStringArray()
