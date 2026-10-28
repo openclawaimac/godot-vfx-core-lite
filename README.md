@@ -46,7 +46,7 @@ Open `demo/demo.tscn` to browse the effects and copy their ids. See `QUICKSTART.
 
 VFX Core 2D for Godot 4 (Pro) has 141 effects and 512 presets across destruction,
 combat, tower defense, factory, UI and pickups, survival and screen effects, plus hooks
-for five game kits. [STORE LINK, to be added when the store page exists.]
+for five game kits. It is sold on itch.io: https://huginhelm.itch.io
 
 ## Licence
 
