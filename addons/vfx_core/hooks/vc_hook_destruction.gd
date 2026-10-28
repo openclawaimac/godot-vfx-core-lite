@@ -26,6 +26,15 @@ extends Node
 ##
 ## Every effect id below falls back to a Lite effect when it is not
 ## registered, so the hook works with the Lite set alone.
+##
+## Lite edition: these effect ids used below are Pro only (not in this pack):
+## debris_brick, debris_wood, debris_metal, debris_glass, debris_dirt, debris_ice,
+## debris_crystal, explosion_medium, explosion_large, shockwave_distort, crumble_pebbles,
+## dust_trail_falling, dust_impact_ground, dust_collapse_cloud, dust_settle,
+## smoke_lingering, embers_rising, fire_small, fire_large, sparks_short_circuit.
+## Every use is guarded by VfxCore.has(); without them the hook falls back to the Lite
+## effects (debris_stone, explosion_small, shock_ring, dust_puff, smoke_puff, hit_spark)
+## or plays nothing, so it runs without errors in Lite.
 
 ## Emitted for every effect the hook plays (useful for sound or tests).
 signal played(id: StringName, global_pos: Vector2)
@@ -77,7 +86,7 @@ signal shake_requested(trauma: float)
 
 @export_group("Pieces")
 @export var crumble_on_detach := true
-## Attach dust_trail_falling to a detached piece when the piece dictionary
+## Attach dust_trail_falling (Pro only) to a detached piece when the piece dictionary
 ## has a "node" (Node2D) entry; it stops when that node leaves the tree.
 @export var trail_on_detach := true
 @export var dust_on_land := true
@@ -91,7 +100,7 @@ signal shake_requested(trauma: float)
 ## Burning cells are grouped into square areas of this size (world-local px);
 ## each area plays one looping fire.
 @export var fire_area_px := 24.0
-## Burning cells in one area that switch it to fire_large.
+## Burning cells in one area that switch it to fire_large (Pro only).
 @export var fire_large_cells := 40
 ## Most looping fires at once; further areas wait for a free slot.
 @export_range(1, 64) var max_fires := 16

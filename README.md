@@ -1,6 +1,6 @@
 # VFX Core 2D Lite for Godot 4
 
-*by huginhelm*. Free, MIT-licensed sampler of **VFX Core 2D for Godot 4** (version 0.5.0-m5).
+*by huginhelm*. Free, MIT-licensed sampler of **VFX Core 2D for Godot 4** (version 1.0.0).
 
 Procedural 2D effects for Godot 4.4+. One call plays an effect; every effect is pooled,
 takes any colour and any scale, and has a smooth or a pixel style. Effects use only

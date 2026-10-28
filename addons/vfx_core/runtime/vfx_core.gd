@@ -16,19 +16,19 @@ extends Node
 ## Effects live under this node's "Effects" Node2D in the root viewport, in
 ## world space, so a Camera2D moves them like any other world node.
 
-const VERSION := "0.5.0-m5"
-## The public API is frozen from M2 on (docs/API.md); tests/core/test_api_freeze.gd guards it.
+const VERSION := "1.0.0"
+## The public API is frozen for 1.x (docs/API.md); tests/core/test_api_freeze.gd guards it.
 const API_LEVEL := 1
 
 ## Global live-particle budget (§6). LOW effects are dropped first, then the
 ## oldest one-shot is recycled; HIGH effects always play.
 var max_live_particles := 3000
-## Optional PointLight2D layers (none ship in M1); keep off on web.
+## Optional PointLight2D layers (no shipped effect uses one); keep off on web.
 var lights_enabled := not OS.has_feature("web")
 ## Default max instances per effect id. A preset's max_instances overrides it
 ## per id; nothing ever exceeds POOL_HARD_CAP.
 var pool_max_per_id := 16
-## z_index of the layer that holds world-space effects (added in M4). The autoload sits
+## z_index of the layer that holds world-space effects. The autoload sits
 ## before the main scene in the tree, so at z 0 effects would draw under the level.
 ## A play's `z_index` option is relative to this. Lower it to put effects under parts of
 ## your scene; 0 restores the 0.3 behaviour.
@@ -105,7 +105,7 @@ func _process(delta: float) -> void:
 ## Full-screen effects (usage `screen`: screen_flash, chromatic_kick, damage_vignette, ...)
 ## keep running in real time during a hit_stop(), so a white flash fades on schedule
 ## instead of being held on screen for the whole freeze (photosensitivity). Set true to
-## freeze them with everything else, as before M4.
+## freeze them with everything else.
 var hit_stop_holds_screen := false
 
 
