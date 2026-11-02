@@ -16,7 +16,7 @@ extends Node
 ## Effects live under this node's "Effects" Node2D in the root viewport, in
 ## world space, so a Camera2D moves them like any other world node.
 
-const VERSION := "1.0.1"
+const VERSION := "1.1.0"
 ## The public API is frozen for 1.x (docs/API.md); tests/core/test_api_freeze.gd guards it.
 const API_LEVEL := 1
 
@@ -40,8 +40,24 @@ var layer_z_index := 100:
 const POOL_HARD_CAP := 64
 ## When true, nothing advances on its own; call step(dt) (tests, capture).
 var manual_step := false
-## Global time scale for all effects.
-var time_scale := 1.0
+## Global time scale for all effects (clock and particle simulation; 0 freezes).
+## Engine.time_scale (fast-forward, slow motion) is respected on top of this.
+var time_scale := 1.0:
+	set(v):
+		time_scale = maxf(v, 0.0) if is_finite(v) else 1.0
+		_sync_speed()
+## Freezes every running effect (clock, particles, screen effects, shake) without
+## pausing the scene tree. New plays still start, frozen. A paused SceneTree
+## (get_tree().paused) also freezes effects, since VfxCore and the effects inherit it.
+var paused := false:
+	set(v):
+		paused = v
+		_sync_speed()
+## While true, play(), play_line(), play_attached(), apply(), shake() and hit_stop()
+## do nothing and return inert handles (no error). Use it around fast-forward or
+## catch-up loops so skipped seconds don't dump all their effects into one frame.
+## Dropped calls are counted in stats()["suspended"].
+var suspended := false
 
 ## Camera shake (trauma model): offset = shake_max_offset * trauma² * noise;
 ## trauma falls by shake_decay per second. Shake and hit-stop run on unscaled
@@ -63,7 +79,7 @@ var _layer: Node2D
 var _pool_root: Node2D
 var _live := 0
 var _warned: Dictionary = {}
-var _counters := {"plays": 0, "dropped": 0, "recycled_budget": 0, "over_budget": 0, "unknown": 0}
+var _counters := {"plays": 0, "dropped": 0, "recycled_budget": 0, "over_budget": 0, "unknown": 0, "suspended": 0}
 var _trauma := 0.0
 var _shake_t := 0.0
 var _shake_snap := 0
@@ -90,6 +106,8 @@ func _enter_tree() -> void:
 
 
 func _process(delta: float) -> void:
+	if paused:
+		return
 	# unscaled frame time for shake and hit-stop (Engine.time_scale is >= 0.01
 	# while a hit-stop runs, so this stays exact under Movie Maker too)
 	var ts := Engine.time_scale
@@ -122,6 +140,13 @@ var clock := 0.0
 
 
 ## Advances every active effect by `dt` seconds.
+func _sync_speed() -> void:
+	VCEffect2D.global_speed = 0.0 if paused else time_scale
+	for e in _active:
+		if is_instance_valid(e) and e.active:
+			e.apply_global_speed()
+
+
 func step(dt: float) -> void:
 	clock += dt
 	_scratch.assign(_active)
@@ -189,7 +214,7 @@ func apply(id: StringName, target: CanvasItem, opts: Dictionary = {}) -> VCHandl
 ## Adds camera-shake trauma (0..1, clamped; offset grows with trauma²).
 ## Options: pixel_size (int) snaps the offset to whole blocks for pixel art.
 func shake(trauma: float, opts: Dictionary = {}) -> void:
-	if not is_finite(trauma) or trauma <= 0.0:
+	if suspended or not is_finite(trauma) or trauma <= 0.0:
 		return
 	_trauma = clampf(_trauma + trauma, 0.0, 1.0)
 	_shake_snap = clampi(int(opts.get("pixel_size", 0)), 0, 8)
@@ -207,7 +232,7 @@ func shake_trauma() -> float:
 ## Full-screen effects are the exception: they keep fading in real time (see
 ## `hit_stop_holds_screen`).
 func hit_stop(seconds: float = 0.06, scale: float = 0.02) -> void:
-	if not is_finite(seconds) or seconds <= 0.0:
+	if suspended or not is_finite(seconds) or seconds <= 0.0:
 		return
 	seconds = minf(seconds, 1.0)
 	if not _hs_on:
@@ -299,6 +324,7 @@ func stats() -> Dictionary:
 		"plays": _counters["plays"], "dropped": _counters["dropped"],
 		"recycled_pool": rec, "grown_pool": grown, "recycled_budget": _counters["recycled_budget"],
 		"over_budget": _counters["over_budget"], "unknown": _counters["unknown"],
+		"suspended": _counters["suspended"],
 	}
 
 
@@ -398,6 +424,9 @@ func _preset(id: StringName, preset_id: StringName) -> VCPreset:
 
 
 func _spawn(id: StringName, opts: Dictionary) -> VCEffect2D:
+	if suspended:
+		_counters["suspended"] += 1
+		return null
 	if not _entries.has(id):
 		_counters["unknown"] += 1
 		push_error("VfxCore: unknown effect id '%s'%s" % [id, _suggest(id)])

@@ -34,6 +34,26 @@ Properties: `max_live_particles` (3000), `lights_enabled`, `pool_max_per_id` (16
 `manual_step`, `time_scale` and `clock` (read-only seconds of effect time; it drives the
 anti-strobe re-arm of `hit_flash`).
 
+Time control (1.1):
+
+- `time_scale` (1.0) scales every effect, including the particle simulation; 0 freezes them.
+  Negative values clamp to 0; NaN and INF fall back to 1. `Engine.time_scale` (slow motion,
+  fast-forward) applies on top, and the effect clock and particles stay in step with it.
+- `paused` (false) freezes every running effect, the camera shake and the effect clock without
+  pausing the scene tree. Effects started while paused start frozen. A paused SceneTree
+  (`get_tree().paused`) freezes effects too, because the autoload and the effects inherit it.
+- `suspended` (false) turns `play()`, `play_attached()`, `play_line()`, `apply()`, `shake()` and
+  `hit_stop()` into no-ops that return inert handles, with no error. Running effects carry on.
+  Set it around a fast-forward or catch-up loop, so skipped seconds don't dump all their
+  effects into one frame. `stats()["suspended"]` counts the dropped calls.
+
+```gdscript
+VfxCore.suspended = true
+for i in skipped_ticks:
+	world.simulate(TICK)   # gameplay calls VfxCore.play() as usual; nothing spawns
+VfxCore.suspended = false
+```
+
 Camera shake: `shake_max_offset` (Vector2(24, 18) px at trauma 1), `shake_decay` (1.6 trauma per second),
 `shake_frequency` (18 Hz) and `shake_camera` (a Camera2D; when it is null, the current viewport camera
 is used, or the root canvas transform if there is none).
@@ -130,6 +150,19 @@ Plays 2D effects at 3D positions for 3D games (RTS cameras).
 | `play(id, world_pos, opts = {})` | projects and re-projects every frame; hidden behind the camera |
 | `project(world)` / `is_in_front(world)` / `camera()` | helpers |
 | `tracked_count()` / `refresh()` | introspection, manual update |
+
+## `VCBillboard3D` (1.1)
+
+A `Sprite3D` that shows 2D effects inside a 3D scene: a transparent SubViewport renders the
+effects and the sprite faces the camera. Unlike `VCOverlay3D`, it is depth-tested, so walls and
+units in front hide the effect. See `docs/3D.md` for which effects suit it and the limits.
+
+| call | notes |
+|---|---|
+| `viewport_px` (384), `world_size` (3.0 m), `origin` (Vector2(0.5, 0.5)) | exports: effect-space pixels, size in the world, where the effect origin sits in the square |
+| `play(id, opts = {})` | plays through `VfxCore.play_attached()`, so pooling, budget and time control apply |
+| `stop_all(immediate = false)` | stops (or kills) the effects on this card |
+| `get_viewport_2d()` | the SubViewport |
 
 ## Hooks
 

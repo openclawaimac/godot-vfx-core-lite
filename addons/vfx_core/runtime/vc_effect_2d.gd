@@ -403,6 +403,18 @@ func start() -> void:
 	advance(0.0)
 
 
+## Scale VfxCore applies to self-simulating layers (particles): VfxCore.time_scale,
+## or 0 while VfxCore.paused. Stays 1 in the editor and for standalone use.
+static var global_speed := 1.0
+
+
+## Re-applies `global_speed` to the layers (VfxCore calls this when it changes).
+func apply_global_speed() -> void:
+	for l in _layers:
+		if l.has_method(&"_vc_global_speed"):
+			l._vc_global_speed(self)
+
+
 func advance(dt: float) -> void:
 	if not active:
 		return

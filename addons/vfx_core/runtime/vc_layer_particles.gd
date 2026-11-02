@@ -73,7 +73,7 @@ func _vc_configure(e: VCEffect2D, n: int, px: int) -> void:
 		for i in 3:
 			_init_ramp.set_color(i, e.palette_color(i * 0.5))
 		color_initial_ramp = _init_ramp
-	speed_scale = e.p_speed
+	_vc_global_speed(e)
 	seed = e.rng.randi()
 	rotation = _authored_rot + deg_to_rad(e.rng.randf_range(-angle_jitter, angle_jitter))
 	position = _authored_pos
@@ -84,6 +84,10 @@ func _vc_configure(e: VCEffect2D, n: int, px: int) -> void:
 		emission_rect_extents.x = maxf(l * 0.5, 1.0)
 		position.x = _authored_pos.x + l * 0.5
 	_place_end()
+
+
+func _vc_global_speed(e: VCEffect2D) -> void:
+	speed_scale = e.p_speed * VCEffect2D.global_speed
 
 
 func _place_end() -> void:
