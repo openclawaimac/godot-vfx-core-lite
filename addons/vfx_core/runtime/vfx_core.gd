@@ -16,7 +16,7 @@ extends Node
 ## Effects live under this node's "Effects" Node2D in the root viewport, in
 ## world space, so a Camera2D moves them like any other world node.
 
-const VERSION := "1.0.0"
+const VERSION := "1.0.1"
 ## The public API is frozen for 1.x (docs/API.md); tests/core/test_api_freeze.gd guards it.
 const API_LEVEL := 1
 
